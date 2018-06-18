@@ -12,6 +12,7 @@ def create_data_set():
     labels = ['A', 'A', 'B', 'B']
     return group, labels
 
+
 def classify(in_x, data_set, labels, k):
     data_set_size = data_set.shape[0]
     diff_mat = np.tile(in_x, (data_set_size, 1)) - data_set
@@ -30,11 +31,12 @@ def classify(in_x, data_set, labels, k):
 
     return sorted_class_count[0][0]
 
+
 def file_to_matrix(filename):
     love_dictionary = {'largeDoses': 3, 'smallDoses': 2, 'didntLike': 1}
 
-    file = open(filename)
-    array_lines = file.readlines()
+    data_file = open(filename)
+    array_lines = data_file.readlines()
     num_of_lines = len(array_lines)
     return_mat = np.zeros((num_of_lines, 3))
     class_label_vector = []
@@ -52,6 +54,7 @@ def file_to_matrix(filename):
 
     return return_mat, class_label_vector
 
+
 def img_to_vector(filename):
     vec = np.zeros((1, 1024))
     file = open(filename)
@@ -60,6 +63,7 @@ def img_to_vector(filename):
         for j in range(32):
             vec[0, 32*i + j] = int(line[j])
     return vec
+
 
 def auto_norm(data_set):
     min_vals = data_set.min(0)
@@ -71,6 +75,7 @@ def auto_norm(data_set):
     norm_data_set = norm_data_set / np.tile(ranges, (m, 1))
 
     return norm_data_set, ranges, min_vals
+
 
 def dating_class_test():
     ratio = 0.10
@@ -86,10 +91,11 @@ def dating_class_test():
                                      3)
         print("the classifier came back with: %d, real answer is: %d"
               % (classifier_result, dating_labels[i]))
-        if (classifier_result != dating_labels[i]):
+        if classifier_result != dating_labels[i]:
             error_count += 1.0
     print("total error rate is: %f" % (error_count / float(num_test_vecs)))
     print(error_count)
+
 
 def classify_person():
     return_list = ['not at all', 'in small doses', 'in large doses']
