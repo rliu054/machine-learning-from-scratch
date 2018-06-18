@@ -132,14 +132,14 @@ def store_tree(input_tree, filename):
     """Dump tree to file."""
 
     import pickle
-    file = open(filename, 'wb')
-    pickle.dump(input_tree, file)
-    file.close()
+    dump_file = open(filename, 'wb')
+    pickle.dump(input_tree, dump_file)
+    dump_file.close()
 
 
 def grab_tree(filename):
     """Read tree from file."""
 
     import pickle
-    file = open(filename, 'rb')
-    return pickle.load(file)
+    dump_file = open(filename, 'rb')
+    return pickle.load(dump_file)
