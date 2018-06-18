@@ -5,12 +5,13 @@ Logistic regression module.
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def load_data_set():
     data_mat = []
     label_mat = []
 
-    file = open('testSet.txt')
-    for line in file.readlines():
+    data_file = open('testSet.txt')
+    for line in data_file.readlines():
         line_ar = line.strip().split()
         data_mat.append([1.0, float(line_ar[0]), float(line_ar[1])])
         label_mat.append(int(line_ar[2]))
@@ -95,8 +96,8 @@ def stoc_grad_ascent_improved(data_mat, labels, num_iter=150):
     return weights
 
 
-def classify(input, weights):
-    y = sigmoid(sum(input * weights))
+def classify(data, weights):
+    y = sigmoid(sum(data * weights))
     if y > 0.5:
         return 1.0
     return 0.0
