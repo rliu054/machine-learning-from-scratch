@@ -6,6 +6,7 @@ import re
 import operator
 import numpy as np
 
+
 def load_data_set():
     posting_list = [
         ['my', 'dog', 'has', 'flea', 'problems', 'help', 'please'],

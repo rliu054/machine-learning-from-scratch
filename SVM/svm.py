@@ -2,9 +2,9 @@
 SVM module.
 """
 
-from time import sleep
 import random
-import numpy as np
+# import numpy as np
+# from time import sleep
 
 
 def load_data_set(file_name):
@@ -21,7 +21,7 @@ def load_data_set(file_name):
 
 def rand_j(index, m):
     rand = random.randrange(m)
-    while (rand == index):
+    while rand == index:
         rand = random.randrange(m)
     return rand
 
@@ -32,4 +32,3 @@ def clip_alpha(val, high, low):
     if val < low:
         return low
     return val
-
