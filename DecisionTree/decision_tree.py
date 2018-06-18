@@ -7,7 +7,7 @@ import math
 
 
 def create_data_set():
-    '''Generate a simple test data set.'''
+    """Generate a simple test data set."""
 
     data_set = [
         [1, 1, 'yes'],
@@ -21,7 +21,7 @@ def create_data_set():
 
 
 def shannon_entropy(data_set):
-    '''Calculate Shannon entropy.'''
+    """Calculate Shannon entropy."""
 
     num_entries = len(data_set)
     label_dict = {}
@@ -41,7 +41,7 @@ def shannon_entropy(data_set):
 
 
 def split_data_set(data_set, axis, value):
-    '''Split set according to specified feature and value.'''
+    """Split set according to specified feature and value."""
 
     result = []
     for feat_vec in data_set:
@@ -52,7 +52,7 @@ def split_data_set(data_set, axis, value):
 
 
 def best_feat_to_split(data_set):
-    '''Iterate all features and find out the best one to split on.'''
+    """Iterate all features and find out the best one to split on."""
 
     num_features = len(data_set[0]) - 1
     base_entropy = shannon_entropy(data_set)
@@ -78,7 +78,7 @@ def best_feat_to_split(data_set):
 
 
 def majority_count(class_list):
-    '''Return feature of majority node.'''
+    """Return feature of majority node."""
 
     class_count = {}
     for vote in class_list:
@@ -92,7 +92,7 @@ def majority_count(class_list):
 
 
 def create_tree(data_set, labels):
-    '''Main method to generate decision tree.'''
+    """Main method to generate decision tree."""
 
     class_list = [example[-1] for example in data_set]
     if class_list.count(class_list[0]) == len(class_list):
@@ -116,7 +116,7 @@ def create_tree(data_set, labels):
 
 
 def classify(input_tree, feat_labels, test_vec):
-    '''Run classification on input tree.'''
+    """Run classification on input tree."""
 
     first_str = list(input_tree)[0]
     second_dict = input_tree[first_str]
@@ -129,7 +129,7 @@ def classify(input_tree, feat_labels, test_vec):
 
 
 def store_tree(input_tree, filename):
-    '''Dump tree to file.'''
+    """Dump tree to file."""
 
     import pickle
     file = open(filename, 'wb')
@@ -138,7 +138,7 @@ def store_tree(input_tree, filename):
 
 
 def grab_tree(filename):
-    '''Read tree from file.'''
+    """Read tree from file."""
 
     import pickle
     file = open(filename, 'rb')
