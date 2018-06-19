@@ -23,7 +23,7 @@ def load_data_set(filename):
 
     input_file = open(filename)
 
-    num_features = len(input_file.readline().split('\t'))
+    num_features = len(input_file.readline().split('\t')) - 1
     input_file.seek(0)
 
     data_mat = []
@@ -31,7 +31,7 @@ def load_data_set(filename):
     for line in input_file.readlines():
         line_arr = []
         curr_line = line.strip().split('\t')
-        for i in range(num_features - 1):
+        for i in range(num_features):
             line_arr.append(float(curr_line[i]))
         data_mat.append(line_arr)
         label_mat.append(float(curr_line[-1]))
@@ -141,11 +141,11 @@ def ada_boost_decision_stump(data_arr, class_labels, num_iter=40):
         agg_errors = np.multiply(np.sign(agg_class_est) !=
                                  np.mat(class_labels).T, np.ones((m, 1)))
         error_rate = agg_errors.sum() / m
-        print("total error: ", error_rate)
+        # print("total error: ", error_rate)
         if error_rate == 0.0:
             break
 
-    return weak_class_arr
+    return weak_class_arr, agg_class_est
 
 
 def ada_classify(data, classifier_arr):
@@ -185,15 +185,15 @@ def plot_roc(pred_strengths, class_labels):
     ax = plt.subplot(111)
     for index in sorted_indices.tolist()[0]:
         if class_labels[index] == 1.0:
-            del_X = 0
-            del_Y = y_step
+            del_x = 0
+            del_y = y_step
         else:
-            del_X = x_step
-            del_Y = 0
+            del_x = x_step
+            del_y = 0
             y_sum += cur[1]
 
-        ax.plot([cur[0], cur[0] - del_X], [cur[1], cur[1] - del_Y], c='b')
-        cur = (cur[0] - del_X, cur[1] - del_Y)
+        ax.plot([cur[0], cur[0] - del_x], [cur[1], cur[1] - del_y], c='b')
+        cur = (cur[0] - del_x, cur[1] - del_y)
 
     ax.plot([0, 1], [0, 1], 'b--')
     plt.xlabel('False Positive Rate')
