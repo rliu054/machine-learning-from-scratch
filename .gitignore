@@ -1,7 +1,6 @@
 # Project specific
-data/
+Data/
 tags
-*.ipynb
 .idea/
 
 # Byte-compiled / optimized / DLL files
