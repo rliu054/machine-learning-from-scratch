@@ -2,8 +2,8 @@
 Decision tree module.
 """
 
-import operator
 import math
+import operator
 
 
 def create_data_set():
@@ -46,7 +46,7 @@ def split_data_set(data_set, axis, value):
     result = []
     for feat_vec in data_set:
         if feat_vec[axis] == value:
-            result.append(feat_vec[:axis] + feat_vec[axis+1:])
+            result.append(feat_vec[:axis] + feat_vec[axis + 1:])
 
     return result
 
@@ -85,9 +85,8 @@ def majority_count(class_list):
         if vote not in class_count:
             class_count[vote] = 0
         class_count[vote] += 1
-    sorted_class_count = sorted(class_count.items(),
-                                key=operator.itemgetter(1),
-                                reverse=True)
+    sorted_class_count = sorted(
+        class_count.items(), key=operator.itemgetter(1), reverse=True)
     return sorted_class_count[0][0]
 
 
