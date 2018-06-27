@@ -69,3 +69,56 @@ def apriori(data_set, min_support=0.5):
         set_list.append(f_set_list_k)
         k += 1
     return set_list, f_set_dict
+
+
+def generate_rules(set_list, set_dict, min_conf=0.7):
+    rules_list = []
+
+    for i in range(1, len(set_list)):  # only for sets with two or more items
+        for freq_set in set_list[i]:
+            print("freq_set: {}".format(freq_set))
+            h1 = [frozenset([item])for item in freq_set]
+            if i > 1:
+                rules_from_conseq(freq_set, h1, set_dict, rules_list, min_conf)
+            else:
+                calc_conf(freq_set, h1, set_dict, rules_list, min_conf)
+
+
+def calc_conf(freq_set, h, set_dict, rules_list, min_conf=0.7):
+    print("in calc_conf")
+
+    pruned_h = []
+    for conseq in h:
+        print("freq_set: {}, conseq: {}\n".format(freq_set, conseq))
+        conf = set_dict[freq_set] / set_dict[freq_set - conseq]
+        if conf >= min_conf:
+            print(freq_set - conseq, '-->', conseq, 'conf', conf)
+            rules_list.append((freq_set - conseq, conseq, conf))
+            pruned_h.append(conseq)
+    return pruned_h
+
+
+def rules_from_conseq(freq_set, h, set_dict, rules_list, min_conf=0.7):
+    m = len(h[0])
+    print("in rules from conseq, h={}".format(h))
+    print("freq_set={}, m={}".format(freq_set, m))
+
+    if len(freq_set) > m + 1:
+        hmp1 = gen_set_list_size_k(h, m+1)
+        print("before, hmp1={}".format(hmp1))
+        hmp1 = calc_conf(freq_set, hmp1, set_dict, rules_list, min_conf)
+        print("after, hmp1={}".format(hmp1))
+
+        if len(hmp1) > 1:
+            rules_from_conseq(freq_set, hmp1, set_dict, rules_list, min_conf)
+
+
+def print_rules(rules_list, item_meaning):
+    for rule in rules_list:
+        for item in rule[0]:
+            print(item_meaning[item])
+        print("    ---->")
+        for item in rule[1]:
+            print(item_meaning[item])
+        print("confidence: %f" % rule[2])
+        print()
