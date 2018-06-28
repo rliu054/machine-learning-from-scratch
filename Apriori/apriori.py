@@ -54,8 +54,7 @@ def filter(data_set, set_list, min_support):
 
 
 def apriori(data_set, min_support=0.5):
-    set_list_size_one = gen_set_list_size_one(
-        data_set)  # list of sets of length 1
+    set_list_size_one = gen_set_list_size_one(data_set)
     d = list(map(set, data_set))  # make sets immutable
 
     f_set_list, f_set_dict = filter(d, set_list_size_one, min_support)
@@ -77,7 +76,7 @@ def generate_rules(set_list, set_dict, min_conf=0.7):
     for i in range(1, len(set_list)):  # only for sets with two or more items
         for freq_set in set_list[i]:
             print("freq_set: {}".format(freq_set))
-            h1 = [frozenset([item])for item in freq_set]
+            h1 = [frozenset([item]) for item in freq_set]
             if i > 1:
                 rules_from_conseq(freq_set, h1, set_dict, rules_list, min_conf)
             else:
@@ -104,7 +103,7 @@ def rules_from_conseq(freq_set, h, set_dict, rules_list, min_conf=0.7):
     print("freq_set={}, m={}".format(freq_set, m))
 
     if len(freq_set) > m + 1:
-        hmp1 = gen_set_list_size_k(h, m+1)
+        hmp1 = gen_set_list_size_k(h, m + 1)
         print("before, hmp1={}".format(hmp1))
         hmp1 = calc_conf(freq_set, hmp1, set_dict, rules_list, min_conf)
         print("after, hmp1={}".format(hmp1))

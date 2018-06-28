@@ -2,20 +2,20 @@
 This module implements a Naive Bayes classifier.
 """
 
-import re
 import operator
+import re
+
 import numpy as np
 
 
 def load_data_set():
-    posting_list = [
-        ['my', 'dog', 'has', 'flea', 'problems', 'help', 'please'],
-        ['maybe', 'not', 'take', 'him', 'to', 'dog', 'park', 'stupid'],
-        ['my', 'dalmation', 'is', 'so', 'cute', 'I', 'love', 'him'],
-        ['stop', 'posting', 'stupid', 'worthless', 'garbage'],
-        ['mr', 'licks', 'ate', 'my', 'steak', 'how', 'to', 'stop', 'him'],
-        ['quit', 'buying', 'worthless', 'dog', 'food', 'stupid']
-    ]
+    posting_list = [[
+        'my', 'dog', 'has', 'flea', 'problems', 'help', 'please'
+    ], ['maybe', 'not', 'take', 'him', 'to', 'dog', 'park', 'stupid'], [
+        'my', 'dalmation', 'is', 'so', 'cute', 'I', 'love', 'him'
+    ], ['stop', 'posting', 'stupid', 'worthless', 'garbage'], [
+        'mr', 'licks', 'ate', 'my', 'steak', 'how', 'to', 'stop', 'him'
+    ], ['quit', 'buying', 'worthless', 'dog', 'food', 'stupid']]
 
     labels = [0, 1, 0, 1, 0, 1]
     return posting_list, labels
@@ -85,21 +85,17 @@ def testing():
     for post in post_list:
         train_mat.append(set_of_words2vec(vocab_list, post))
 
-    p0_vec, p1_vec, p_abusive = train(np.array(train_mat),
-                                      np.array(class_list))
+    p0_vec, p1_vec, p_abusive = train(
+        np.array(train_mat), np.array(class_list))
 
     test_entry = ['love', 'stupid', 'stupid']
     this_doc = np.array(set_of_words2vec(vocab_list, test_entry))
-    print(test_entry, 'classified as: ', classify(this_doc,
-                                                  p0_vec,
-                                                  p1_vec,
-                                                  p_abusive))
+    print(test_entry, 'classified as: ',
+          classify(this_doc, p0_vec, p1_vec, p_abusive))
     test_entry = ['stupid', 'love']
     this_doc = np.array(set_of_words2vec(vocab_list, test_entry))
-    print(test_entry, 'classified as: ', classify(this_doc,
-                                                  p0_vec,
-                                                  p1_vec,
-                                                  p_abusive))
+    print(test_entry, 'classified as: ',
+          classify(this_doc, p0_vec, p1_vec, p_abusive))
 
 
 def parse_text(string):
@@ -158,9 +154,8 @@ def calc_most_freq(vocab_list, full_text):
     freq_dic = {}
     for token in vocab_list:
         freq_dic[token] = full_text.count(token)
-    sorted_freq = sorted(freq_dic.items(),
-                         key=operator.itemgetter(1),
-                         reverse=True)
+    sorted_freq = sorted(
+        freq_dic.items(), key=operator.itemgetter(1), reverse=True)
     # return sorted_freq[:30]
     return sorted_freq[:30]
 
@@ -189,7 +184,7 @@ def local_words(feed_a, feed_b):
         if word[0] in vocab_list:
             vocab_list.remove(word[0])
 
-    training_set = range(2*min_len)
+    training_set = range(2 * min_len)
 
     test_set = []
     for i in range(20):
@@ -202,8 +197,7 @@ def local_words(feed_a, feed_b):
     for doc_index in training_set:
         train_mat.append(bag_of_words2vec(vocab_list, doc_list[doc_index]))
         train_classes.append(class_list[doc_index])
-    vec_a, vec_b, p_b = train(np.array(train_mat),
-                              np.array(train_classes))
+    vec_a, vec_b, p_b = train(np.array(train_mat), np.array(train_classes))
 
     error_count = 0
     for doc_index in test_set:
@@ -213,7 +207,7 @@ def local_words(feed_a, feed_b):
             error_count += 1
 
     print('the error count is: ', float(error_count))
-    print('the error rate is: ', float(error_count)/len(test_set))
+    print('the error rate is: ', float(error_count) / len(test_set))
     return vocab_list, vec_a, vec_b
 
 
@@ -233,9 +227,8 @@ def get_top_words(sf, seattle):
     for item in sorted_sf[:10]:
         print(item[0])
 
-    sorted_seattle = sorted(top_words_seattle,
-                            key=lambda pair: pair[1],
-                            reverse=True)
+    sorted_seattle = sorted(
+        top_words_seattle, key=lambda pair: pair[1], reverse=True)
     print("Top words in Seattle")
     for item in sorted_seattle[:10]:
         print(item[0])
