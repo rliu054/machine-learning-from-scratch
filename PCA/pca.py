@@ -15,9 +15,9 @@ def pca(data_mat, n=9999):
     cov_mat = np.cov(data_mat, rowvar=0)
     eig_vals, eig_vecs = np.linalg.eig(np.mat(cov_mat))
 
-    eig_val_idx = np.argsort(eig_vals)[:-(n+1):-1]
-    new_eig_vecs = eig_vecs[:, eig_val_idx]
-    low_d_mat = data_mat * new_eig_vecs
-    recon_mat = (low_d_mat * new_eig_vecs.T) + mean_vals
+    eig_val_idx_des = np.argsort(eig_vals)[:-(n+1):-1]
+    principal_eig_vecs = eig_vecs[:, eig_val_idx_des]
+    low_d_mat = data_mat * principal_eig_vecs
+    recon_mat = (low_d_mat * principal_eig_vecs.T) + mean_vals
 
     return low_d_mat, recon_mat
