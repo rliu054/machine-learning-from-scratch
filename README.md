@@ -1,3 +1,3 @@
-Most code is taken from the book Machine Learning in Action.
+Code mostly taken from the book Machine Learning in Action.
 
-I've done some refactoring to make it more clean and PEP8 compliant.
+I've done some refactoring to make it clean and PEP8 compliant.
